@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provoke — concepts</title>
+  <meta name="description" content="Provoke concepts — a working set of ideas for what the consultancy could be, shared for advisor feedback." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      /* Palette taken directly from the deck */
+      --cream:   #FDFCF7;
+      --sand:    #E7E1D0;
+      --sand-2:  #F4F3EE;
+      --gold:    #F4C21B;
+      --maroon:  #8E2B22;
+      --pink:    #E93B7A;
+      --green:   #1C6B43;
+      --peach:   #EF8458;
+      --gray:    #5A5650;
+      --ink:     #181613;
+
+      --col: 940px;
+      --pad: clamp(1.25rem, 5vw, 3.5rem);
+      --font: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Each slide = one full-width panel; content held in a portrait-ish column */
+    .slide { width: 100%; padding: clamp(3rem, 8vh, 6rem) var(--pad); }
+    .col { max-width: var(--col); margin: 0 auto; }
+    .band { width: 100%; padding: clamp(2.2rem, 6vh, 4rem) var(--pad); }
+
+    .eyebrow { font-size: .8rem; font-weight: 600; color: var(--gray); margin: 0 0 .6rem; }
+
+    /* gentle, content-neutral reveal */
+    [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    [data-reveal].in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { [data-reveal] { opacity: 1; transform: none; transition: none; } }
+
+    /* ============================================================
+       SLIDE 1
+    ============================================================ */
+    #s1 { background: var(--cream); }
+    #s1 .q {
+      font-weight: 700; letter-spacing: -.01em;
+      font-size: clamp(1.4rem, 3.6vw, 2.15rem); line-height: 1.2;
+      max-width: 20ch; color: var(--ink); margin: 0 0 2.4rem;
+    }
+    .group-label { font-weight: 600; font-size: clamp(1rem, 2.4vw, 1.25rem); color: var(--gray); margin: 2.6rem 0 1rem; }
+    #s1 .group-label:first-of-type { margin-top: 0; }
+
+    .cloud { display: flex; flex-wrap: wrap; gap: .55rem; }
+    .pill {
+      padding: .45rem .9rem; border-radius: 999px;
+      font-size: clamp(.82rem, 1.7vw, .95rem); font-weight: 500;
+      background: var(--sand); color: var(--ink);
+    }
+    .pill.val { background: var(--gold); color: var(--ink); font-weight: 600; }
+
+    /* delivered as — three cascading colored pills */
+    .cascade { display: flex; flex-direction: column; gap: .6rem; align-items: flex-start; }
+    .bar {
+      padding: .5rem 1.2rem; border-radius: 999px; font-weight: 600;
+      font-size: clamp(.9rem, 2vw, 1.05rem);
+    }
+    .bar.b1 { background: var(--gold);   color: var(--gray);  }
+    .bar.b2 { background: var(--maroon); color: var(--sand);  }
+    .bar.b3 { background: var(--pink);   color: var(--cream); }
+    @media (min-width: 680px) {
+      .cascade .b1 { margin-left: 0; }
+      .cascade .b2 { margin-left: 2.2rem; }
+      .cascade .b3 { margin-left: 1.1rem; }
+    }
+
+    /* to ultimately create — four colored blocks */
+    .create-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; }
+    .block {
+      color: var(--cream); border-radius: 14px; padding: 1rem;
+      font-weight: 600; font-size: clamp(.85rem, 1.7vw, .98rem); line-height: 1.25;
+      min-height: 110px; display: flex; align-items: flex-start;
+    }
+    .block.c1 { background: var(--green);  }
+    .block.c2 { background: var(--gray);   }
+    .block.c3 { background: var(--maroon); }
+    .block.c4 { background: var(--pink);   }
+    .enshit { margin: .9rem 0 0; font-style: italic; font-size: .92rem; color: var(--gray); }
+    @media (max-width: 620px) { .create-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ============================================================
+       SLIDE 2  (pink header band + cream body)
+    ============================================================ */
+    /* slides 2–4 use the deck's own rendered slide images, scaled responsively */
+    #s2, #s3, #s4 { background: var(--cream); display: flex; justify-content: center; }
+    .deckimg {
+      width: 100%; max-width: 560px; height: auto; display: block;
+      border-radius: 16px; box-shadow: 0 26px 64px -30px rgba(40,25,20,.55);
+    }
+    #s2-legacy { background: var(--cream); padding: 0; }
+    #s2 .header { background: var(--pink); }
+    #s2 h2 {
+      margin: 0; max-width: 16ch; color: var(--cream);
+      font-weight: 800; letter-spacing: -.02em; line-height: 1.05;
+      font-size: clamp(1.9rem, 6vw, 3.3rem);
+    }
+    #s2 h2 .g { color: var(--gold); }
+    #s2 .body { padding: clamp(3rem, 8vh, 5rem) var(--pad); }
+
+    .s2diagram { display: grid; grid-template-columns: auto 1fr 1fr 1fr; gap: 1rem; align-items: start; }
+    .mkimg { width: clamp(40px, 6vw, 58px); height: auto; justify-self: center; align-self: start; margin-top: .4rem; }
+    .bubble {
+      position: relative; background: #fff; color: var(--maroon);
+      border-radius: 14px; padding: 1rem .6rem; text-align: center;
+      font-weight: 800; font-size: clamp(1.1rem, 3vw, 1.6rem);
+      box-shadow: 0 10px 22px -14px rgba(40,25,20,.5);
+    }
+    .bubble::after {
+      content:''; position:absolute; left:50%; bottom:-8px; transform:translateX(-50%);
+      border:8px solid transparent; border-top-color:#fff; border-bottom:0;
+    }
+    .steplabel {
+      position: relative;
+      background: var(--green); color: var(--cream); font-weight: 700;
+      text-align: center; padding: .5rem; border-radius: 8px; letter-spacing: .06em;
+      font-size: clamp(.8rem, 2vw, 1rem);
+    }
+    /* green connector arrow bridging the 1rem gap between labels, pointing right */
+    .garrow {
+      position: absolute; left: 100%; top: 50%; transform: translateY(-50%);
+      width: 10px; height: 3px; background: var(--green);
+    }
+    .garrow::after {
+      content: ''; position: absolute; left: 100%; top: 50%; transform: translateY(-50%);
+      width: 0; height: 0; border: 6px solid transparent; border-left-color: var(--green); border-right: 0;
+    }
+    .lane { display: grid; gap: .55rem; align-content: start; }
+    .stackpills { display: grid; gap: .45rem; }
+    .stackpills .p {
+      background: var(--sand); color: var(--maroon); font-weight: 700;
+      text-align: center; padding: .55rem; border-radius: 9px;
+      font-size: clamp(.85rem, 2vw, 1rem);
+    }
+    .inputs { position: relative; grid-column: 2 / 4; display: flex; gap: .9rem; align-items: center; }
+    .inputs .stackpills { flex: 1; }
+    /* sand speech-balloon tails from the Vision block up to LEADERS and TEAMS,
+       matching the AI!/Argh! triangle size & horizontal centers */
+    .inputs::before, .inputs::after {
+      content: ''; position: absolute; top: -8px;
+      border: 8px solid transparent; border-bottom-color: var(--sand); border-top: 0;
+    }
+    .inputs::before { left: 25%; transform: translateX(-50%); }
+    .inputs::after  { left: 75%; transform: translateX(-50%); }
+    .wows {
+      grid-column: 4; align-self: stretch;
+      background: var(--sand); color: var(--maroon); border-radius: 12px;
+      padding: 1rem; font-weight: 800; text-align: center; line-height: 1.3;
+      font-size: clamp(1rem, 2.4vw, 1.3rem); display: grid; place-content: center;
+    }
+    .foot { font-style: italic; font-weight: 500; margin: 1.6rem 0 0; }
+    #s2 .foot { color: var(--pink); }
+
+    @media (max-width: 720px) {
+      .s2diagram { grid-template-columns: 1fr; }
+      .inputs, .wows { grid-column: auto; }
+      .mkimg { justify-self: start; }
+      .garrow, .inputs::before, .inputs::after { display: none; }
+    }
+
+    /* ============================================================
+       SLIDE 3  (green header band + gold body)
+    ============================================================ */
+    #s3-legacy { padding: 0; background: var(--gold); }
+    #s3 .header { background: var(--green); text-align: center; }
+    #s3 h2 { margin: 0; color: var(--cream); font-weight: 800; font-size: clamp(2rem, 6.5vw, 3.4rem); letter-spacing: -.01em; }
+    #s3 h2 .g { color: var(--gold); }
+    #s3 .cap { color: var(--cream); margin: .3rem 0 0; font-weight: 600; }
+    #s3 .caret { color: var(--cream); font-size: 1.4rem; line-height: 1; margin-top: .4rem; }
+    #s3 .body { padding: clamp(3rem, 8vh, 5rem) var(--pad); color: var(--maroon); }
+    #s3 .when { font-weight: 700; font-size: clamp(1.05rem, 2.6vw, 1.35rem); margin: 0 0 1.2rem; }
+    .choice { display: flex; gap: .7rem; align-items: baseline; font-weight: 700; font-size: clamp(1rem, 2.4vw, 1.25rem); margin: .5rem 0; }
+    .choice .mk { flex: none; width: 1.4em; }
+    .choice.no  { color: var(--pink); }
+    .choice.yes { color: var(--maroon); }
+
+    /* circles diagram */
+    .venn { position: relative; max-width: 460px; margin: 2.6rem auto 1.4rem; aspect-ratio: 1 / 1; }
+    .venn .halo {
+      position: absolute; inset: 6% 4%; border-radius: 50%;
+      border: 6px solid var(--peach); opacity: .85;
+    }
+    .venn .c {
+      position: absolute; border-radius: 50%; display: grid; place-items: center;
+      text-align: center; color: var(--cream); font-weight: 700; padding: .4rem;
+      font-size: clamp(.7rem, 2vw, .92rem); line-height: 1.15;
+    }
+    .venn .center { width: 34%; height: 34%; left: 33%; top: 33%; background: var(--pink); color: #fff; }
+    .venn .accessible  { width: 30%; height: 30%; left: 8%;  top: 30%; background: var(--maroon); }
+    .venn .sustainable { width: 30%; height: 30%; right: 8%; top: 30%; background: var(--maroon); }
+    .venn .inclusive   { width: 30%; height: 30%; left: 35%; bottom: 4%; background: var(--maroon); }
+    .venn .lost {
+      position: absolute; left: 50%; top: -6%; transform: translateX(-50%);
+      color: var(--ink); font-weight: 700; font-size: clamp(.72rem, 1.9vw, .9rem);
+      text-align: center; line-height: 1.1;
+    }
+    .venn .lost::after { content: '↕'; display:block; }
+    #s3 .foot { color: var(--green); font-weight: 700; text-align: center; }
+
+    /* ============================================================
+       SLIDE 4  (solid maroon)
+    ============================================================ */
+    #s4-legacy { background: var(--maroon); color: var(--sand); }
+    #s4 h2 { margin: 0; color: var(--sand); font-weight: 800; font-size: clamp(2rem, 6.5vw, 3.4rem); letter-spacing: -.01em; }
+    #s4 h2 .sub { display: block; font-weight: 500; font-size: clamp(1.1rem, 3vw, 1.7rem); color: var(--sand); opacity: .95; margin-top: .2rem; }
+    #s4 .vert { color: var(--gold); font-weight: 700; font-size: clamp(1.1rem, 2.8vw, 1.5rem); margin: 1.8rem 0 0; max-width: 26ch; }
+    .intent-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(1.4rem, 4vw, 3rem); align-items: center; margin-top: 2.2rem; }
+    .inlbl { color: var(--pink); font-weight: 700; margin: 0 0 1rem; font-size: clamp(1rem, 2.4vw, 1.2rem); }
+    .checks { display: grid; gap: .7rem; }
+    .cpill {
+      background: var(--sand); color: var(--maroon); border-radius: 999px;
+      padding: .7rem 1.2rem; font-weight: 600; display: flex; gap: .6rem; align-items: center;
+      font-size: clamp(.9rem, 2vw, 1.05rem);
+    }
+    .cpill .ck { color: var(--green); font-weight: 900; }
+    .orgs { margin: 1.4rem 0 0; font-weight: 700; color: var(--pink); font-size: clamp(1rem, 2.2vw, 1.15rem); max-width: 26ch; }
+    .orgs .g { color: var(--gold); }
+    .sun { position: relative; display: grid; place-items: center; min-height: 220px; }
+    .sun img { width: min(70%, 240px); }
+    .sun .up { position: absolute; font-size: 2.2rem; color: var(--sand); font-weight: 900; }
+    #s4 .foot { color: var(--peach); font-weight: 600; margin-top: 2rem; }
+    @media (max-width: 720px) { .intent-grid { grid-template-columns: 1fr; } .sun { order: -1; } }
+
+    /* ============================================================
+       SLIDE 5  (white, discussion + table)
+    ============================================================ */
+    #s5 { background: #fff; color: var(--gray); }
+    #s5 .so { font-weight: 700; font-size: clamp(1.4rem, 3.4vw, 2rem); color: var(--gray); margin: 0 0 1.2rem; }
+    #s5 ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .6rem; }
+    #s5 li { font-size: clamp(1rem, 2.4vw, 1.35rem); font-weight: 500; color: var(--gray); }
+
+    .ftable { width: 100%; border-collapse: collapse; margin-top: 3rem; }
+    .ftable th, .ftable td { text-align: left; padding: 1rem .9rem; vertical-align: top; border-top: 2px solid var(--sand); }
+    .ftable .rowlabel { color: var(--ink); font-weight: 700; width: 8rem; white-space: nowrap; }
+    .ftable td { color: var(--gray); font-weight: 500; font-size: clamp(.9rem, 1.9vw, 1.05rem); }
+    @media (max-width: 640px) {
+      .ftable, .ftable tbody, .ftable tr, .ftable td, .ftable th { display: block; width: 100%; }
+      .ftable tr { border-top: 2px solid var(--sand); padding: .6rem 0; }
+      .ftable th, .ftable td { border: 0; padding: .3rem 0; }
+      .ftable .rowlabel { color: var(--maroon); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= SLIDE 1 ================= -->
+  <section class="slide" id="s1">
+    <div class="col">
+      <p class="q" data-reveal>How can we frame what we do in a way that people quickly understand, need, and want to pay for?</p>
+
+      <p class="group-label" data-reveal>We know we bring&hellip;</p>
+      <div class="cloud" data-reveal>
+        <span class="pill">Behavior Change</span>
+        <span class="pill">Team and Org Design</span>
+        <span class="pill val">Heart</span>
+        <span class="pill">Design Leadership</span>
+        <span class="pill">Service Design</span>
+        <span class="pill val">Taste</span>
+        <span class="pill">Human Centered Design</span>
+        <span class="pill">Culture Shaping</span>
+        <span class="pill">Product Strategy</span>
+        <span class="pill">Sustainability</span>
+        <span class="pill">Community Building</span>
+        <span class="pill">Event Design</span>
+        <span class="pill val">Optimism</span>
+        <span class="pill">Systems Design</span>
+        <span class="pill">Measurement, Evaluation, and Learning</span>
+        <span class="pill">Business Development</span>
+        <span class="pill val">Creativity</span>
+        <span class="pill">Partnering &amp; Coalitions</span>
+        <span class="pill val">Pragmatism</span>
+      </div>
+
+      <p class="group-label" data-reveal>Which are delivered as&hellip;</p>
+      <div class="cascade" data-reveal>
+        <span class="bar b1">People + Teams</span>
+        <span class="bar b2">Tools + Approaches</span>
+        <span class="bar b3">Vision + Solutions</span>
+      </div>
+
+      <p class="group-label" data-reveal>To ultimately create&hellip;</p>
+      <div class="create-grid" data-reveal>
+        <div class="block c1">Great Human Experiences</div>
+        <div class="block c2">Cultures for Reaching Ambitious Futures</div>
+        <div class="block c3">Bridges to Ethical Capitalism</div>
+        <div class="block c4">Products, Customers, and Futures that Teams Love</div>
+      </div>
+      <p class="enshit" data-reveal>or, whatever the opposite of enshitification is</p>
+    </div>
+  </section>
+
+  <!-- ================= SLIDE 2 ================= -->
+  <section class="slide" id="s2">
+    <img class="deckimg" src="assets/slide2.png"
+      alt="We design the teams that design great things. LEADERS to TEAMS to RESULTS: AI!, Argh!, Blah. become Vision, Tools, Principles, Culture and Wow. Wow. Wow. Wow. Wow! — resilient teams, outcomes that matter." />
+  </section>
+
+  <!-- ================= SLIDE 3 ================= -->
+  <section class="slide" id="s3">
+    <img class="deckimg" src="assets/slide3.png"
+      alt="the agency agency (capacity for action). When everyone designs with AI: No one needs Design, or Design has agency and ability to deliver more value for everyone. Accessible, Sustainable, Inclusive around Initial business case; Lost business value. — design of tools, context, and systems." />
+  </section>
+
+  <!-- ================= SLIDE 4 ================= -->
+  <section class="slide" id="s4">
+    <img class="deckimg" src="assets/slide4.png"
+      alt="intentional design. From the near-future, back. AI can take things vertical — the question is, where will that lead? In order to get… what the business needs, what teams are passionate to deliver, and everyone can benefit from. Orgs must shape clear intentions that drive the work of teams and AI. — design of futures + AI-enabled paths forward." />
+  </section>
+
+  <!-- ================= SLIDE 5 ================= -->
+  <section class="slide" id="s5">
+    <div class="col">
+      <p class="so" data-reveal>So&hellip;</p>
+      <ul data-reveal>
+        <li>What do you think are key ingredients?</li>
+        <li>What are challenges you see if we went after any of these?</li>
+        <li>Who should be on our target client list?</li>
+        <li>Who are our competitors / substitutes?</li>
+      </ul>
+
+      <table class="ftable" data-reveal>
+        <tbody>
+          <tr>
+            <th class="rowlabel">Frame</th>
+            <td>People + Teams</td>
+            <td>Tools + Approaches</td>
+            <td>Vision + Solutions</td>
+          </tr>
+          <tr>
+            <th class="rowlabel">Category</th>
+            <td>Change management, Design Ops, Culture Transformation</td>
+            <td>AI solutions integration</td>
+            <td>Design Strategy, Product Strategy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script>
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+  </script>
+</body>
+</html>
