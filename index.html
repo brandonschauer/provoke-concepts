@@ -58,11 +58,11 @@
     ============================================================ */
     #s1 { background: var(--cream); }
     #s1 .q {
-      font-weight: 700; letter-spacing: -.01em;
-      font-size: clamp(1.4rem, 3.6vw, 2.15rem); line-height: 1.2;
-      max-width: 20ch; color: var(--ink); margin: 0 0 2.4rem;
+      font-weight: 700; letter-spacing: -.015em;
+      font-size: clamp(2.1rem, 5.4vw, 3.2rem); line-height: 1.15;
+      color: var(--ink); margin: 0 0 2.4rem;
     }
-    .group-label { font-weight: 600; font-size: clamp(1rem, 2.4vw, 1.25rem); color: var(--gray); margin: 2.6rem 0 1rem; }
+    .group-label { font-weight: 600; font-size: clamp(1rem, 2.4vw, 1.25rem); color: var(--gray); margin: 3.9rem 0 1rem; }
     #s1 .group-label:first-of-type { margin-top: 0; }
 
     .cloud { display: flex; flex-wrap: wrap; gap: .55rem; }
@@ -74,33 +74,47 @@
     .pill.val { background: var(--gold); color: var(--ink); font-weight: 600; }
 
     /* delivered as — three cascading colored pills */
-    .cascade { display: flex; flex-direction: column; gap: .6rem; align-items: flex-start; }
+    .cascade { display: flex; flex-direction: column; gap: .7rem; align-items: flex-start; }
     .bar {
-      padding: .5rem 1.2rem; border-radius: 999px; font-weight: 600;
-      font-size: clamp(.9rem, 2vw, 1.05rem);
+      padding: 1rem 1.4rem; border-radius: 14px; font-weight: 600;
+      text-align: center; font-size: clamp(.95rem, 2.2vw, 1.15rem);
     }
-    .bar.b1 { background: var(--gold);   color: var(--gray);  }
-    .bar.b2 { background: var(--maroon); color: var(--sand);  }
-    .bar.b3 { background: var(--pink);   color: var(--cream); }
-    @media (min-width: 680px) {
-      .cascade .b1 { margin-left: 0; }
-      .cascade .b2 { margin-left: 2.2rem; }
-      .cascade .b3 { margin-left: 1.1rem; }
+    /* radiused rectangles that stretch across the page and stagger; widths in %
+       so they scale down in proportion to the page width */
+    .bar.b1 { width: 62%; margin-left: 0;   background: var(--gold);   color: var(--gray);  }
+    .bar.b2 { width: 59%; margin-left: 41%; background: var(--maroon); color: var(--sand);  }
+    .bar.b3 { width: 49%; margin-left: 23%; background: var(--pink);   color: var(--cream); }
+    /* on phones the stagger gets too tight for the text — widen the bars and
+       ease the offsets so the labels always fit while keeping the cascade */
+    @media (max-width: 640px) {
+      .bar { padding: .85rem 1rem; }
+      .bar.b1 { width: 82%; margin-left: 0;   }
+      .bar.b2 { width: 80%; margin-left: 20%; }
+      .bar.b3 { width: 72%; margin-left: 12%; }
     }
 
-    /* to ultimately create — four colored blocks */
-    .create-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; }
+    /* to ultimately create — four square blocks, text anchored bottom-left */
+    .create { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; }
     .block {
-      color: var(--cream); border-radius: 14px; padding: 1rem;
-      font-weight: 600; font-size: clamp(.85rem, 1.7vw, .98rem); line-height: 1.25;
-      min-height: 110px; display: flex; align-items: flex-start;
+      aspect-ratio: 1 / 1;
+      color: var(--cream); border-radius: 14px; padding: 1.1rem;
+      font-weight: 700; font-size: clamp(.95rem, 1.9vw, 1.15rem); line-height: 1.2;
+      display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+      text-align: left;
     }
     .block.c1 { background: var(--green);  }
     .block.c2 { background: var(--gray);   }
     .block.c3 { background: var(--maroon); }
     .block.c4 { background: var(--pink);   }
-    .enshit { margin: .9rem 0 0; font-style: italic; font-size: .92rem; color: var(--gray); }
-    @media (max-width: 620px) { .create-grid { grid-template-columns: repeat(2, 1fr); } }
+    /* yellow arrow (scales) sits under the "Bridges…" box pointing up at it,
+       with the note to its right; both are pinned to that column at any width */
+    .arrowrow { grid-column: 3 / 5; grid-row: 2; display: flex; align-items: flex-end; gap: .7rem; }
+    .carrow { width: clamp(56px, 7vw, 92px); height: auto; flex: none; }
+    .enshit { margin: 0; line-height: 1.25; font-size: clamp(.85rem, 1.6vw, .95rem); color: var(--gray); }
+    @media (max-width: 620px) {
+      .create { grid-template-columns: repeat(2, 1fr); }
+      .arrowrow { grid-column: 1 / 3; grid-row: 3; }
+    }
 
     /* ============================================================
        SLIDE 2  (pink header band + cream body)
@@ -110,7 +124,32 @@
     .deckimg {
       width: 100%; max-width: 560px; height: auto; display: block;
       border-radius: 16px; box-shadow: 0 26px 64px -30px rgba(40,25,20,.55);
+      cursor: zoom-in;
     }
+
+    /* click-to-zoom lightbox: image spans 90% of the browser width (≈5% each side),
+       scrolls vertically, with a fixed close button always visible top-right */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 1000; display: none;
+      overflow-y: auto; overflow-x: hidden;
+      background: rgba(24, 22, 19, .85);
+      -webkit-overflow-scrolling: touch;
+    }
+    .lightbox.open { display: block; }
+    .lightbox__img {
+      display: block; width: 90%; height: auto; margin: 4vh auto;
+      border-radius: 10px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.7);
+      cursor: default;
+    }
+    .lightbox__close {
+      position: fixed; top: 18px; right: 22px; z-index: 1001;
+      width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
+      background: rgba(0,0,0,.55); color: #fff; font-size: 30px; line-height: 1;
+      display: grid; place-items: center; padding: 0;
+      transition: background .15s ease;
+    }
+    .lightbox__close:hover { background: rgba(0,0,0,.85); }
+    body.lb-open { overflow: hidden; }
     #s2-legacy { background: var(--cream); padding: 0; }
     #s2 .header { background: var(--pink); }
     #s2 h2 {
@@ -252,16 +291,19 @@
     #s5 ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .6rem; }
     #s5 li { font-size: clamp(1rem, 2.4vw, 1.35rem); font-weight: 500; color: var(--gray); }
 
-    .ftable { width: 100%; border-collapse: collapse; margin-top: 3rem; }
+    /* narrow screens: scroll the whole table sideways instead of collapsing it */
+    .ftable-wrap { margin-top: 6rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .ftable { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 600px; }
+    .ftable .col-label { width: 8rem; }
     .ftable th, .ftable td { text-align: left; padding: 1rem .9rem; vertical-align: top; border-top: 2px solid var(--sand); }
+    /* miniature slide previews above the three frame columns (reuse the loaded SVGs) */
+    .thumbrow td { border-top: 0; padding: 0 .9rem .7rem; text-align: center; vertical-align: bottom; }
+    .minithumb {
+      display: block; width: 100%; max-width: 240px; height: auto; margin: 0 auto;
+      border-radius: 8px; box-shadow: 0 8px 22px -10px rgba(40,25,20,.5); cursor: zoom-in;
+    }
     .ftable .rowlabel { color: var(--ink); font-weight: 700; width: 8rem; white-space: nowrap; }
     .ftable td { color: var(--gray); font-weight: 500; font-size: clamp(.9rem, 1.9vw, 1.05rem); }
-    @media (max-width: 640px) {
-      .ftable, .ftable tbody, .ftable tr, .ftable td, .ftable th { display: block; width: 100%; }
-      .ftable tr { border-top: 2px solid var(--sand); padding: .6rem 0; }
-      .ftable th, .ftable td { border: 0; padding: .3rem 0; }
-      .ftable .rowlabel { color: var(--maroon); }
-    }
   </style>
 </head>
 <body>
@@ -302,31 +344,34 @@
       </div>
 
       <p class="group-label" data-reveal>To ultimately create&hellip;</p>
-      <div class="create-grid" data-reveal>
+      <div class="create" data-reveal>
         <div class="block c1">Great Human Experiences</div>
         <div class="block c2">Cultures for Reaching Ambitious Futures</div>
         <div class="block c3">Bridges to Ethical Capitalism</div>
         <div class="block c4">Products, Customers, and Futures that Teams Love</div>
+        <div class="arrowrow">
+          <img class="carrow" src="assets/arrow.svg" alt="" />
+          <p class="enshit">or, whatever the opposite of enshitification is</p>
+        </div>
       </div>
-      <p class="enshit" data-reveal>or, whatever the opposite of enshitification is</p>
     </div>
   </section>
 
   <!-- ================= SLIDE 2 ================= -->
   <section class="slide" id="s2">
-    <img class="deckimg" src="assets/slide2.png"
+    <img class="deckimg" src="assets/slide2.svg"
       alt="We design the teams that design great things. LEADERS to TEAMS to RESULTS: AI!, Argh!, Blah. become Vision, Tools, Principles, Culture and Wow. Wow. Wow. Wow. Wow! — resilient teams, outcomes that matter." />
   </section>
 
   <!-- ================= SLIDE 3 ================= -->
   <section class="slide" id="s3">
-    <img class="deckimg" src="assets/slide3.png"
+    <img class="deckimg" src="assets/slide3.svg"
       alt="the agency agency (capacity for action). When everyone designs with AI: No one needs Design, or Design has agency and ability to deliver more value for everyone. Accessible, Sustainable, Inclusive around Initial business case; Lost business value. — design of tools, context, and systems." />
   </section>
 
   <!-- ================= SLIDE 4 ================= -->
   <section class="slide" id="s4">
-    <img class="deckimg" src="assets/slide4.png"
+    <img class="deckimg" src="assets/slide4.svg"
       alt="intentional design. From the near-future, back. AI can take things vertical — the question is, where will that lead? In order to get… what the business needs, what teams are passionate to deliver, and everyone can benefit from. Orgs must shape clear intentions that drive the work of teams and AI. — design of futures + AI-enabled paths forward." />
   </section>
 
@@ -341,8 +386,19 @@
         <li>Who are our competitors / substitutes?</li>
       </ul>
 
-      <table class="ftable" data-reveal>
+      <div class="ftable-wrap" data-reveal>
+      <table class="ftable">
+        <colgroup>
+          <col class="col-label" />
+          <col /><col /><col />
+        </colgroup>
         <tbody>
+          <tr class="thumbrow">
+            <td></td>
+            <td><img class="minithumb" src="assets/slide2.svg" alt="Slide preview: We design the teams that design great things" /></td>
+            <td><img class="minithumb" src="assets/slide3.svg" alt="Slide preview: the agency agency — design of tools, context, and systems" /></td>
+            <td><img class="minithumb" src="assets/slide4.svg" alt="Slide preview: intentional design — from the near-future, back" /></td>
+          </tr>
           <tr>
             <th class="rowlabel">Frame</th>
             <td>People + Teams</td>
@@ -357,14 +413,51 @@
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
   </section>
+
+  <!-- zoom overlay for the slide images -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lightbox__close" id="lightboxClose" type="button" aria-label="Close zoomed slide">&times;</button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+  </div>
 
   <script>
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
     document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+
+    (function(){
+      var lb = document.getElementById('lightbox');
+      var lbImg = document.getElementById('lightboxImg');
+      var closeBtn = document.getElementById('lightboxClose');
+
+      function open(src, alt){
+        lbImg.src = src;
+        lbImg.alt = alt || '';
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden', 'false');
+        lb.scrollTop = 0;
+        document.body.classList.add('lb-open');
+        closeBtn.focus();
+      }
+      function close(){
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('lb-open');
+        lbImg.removeAttribute('src');
+      }
+
+      document.querySelectorAll('.deckimg, .minithumb').forEach(function(img){
+        img.addEventListener('click', function(){ open(img.currentSrc || img.src, img.alt); });
+      });
+      closeBtn.addEventListener('click', close);
+      // click the dimmed area (not the image) to close
+      lb.addEventListener('click', function(e){ if(e.target === lb) close(); });
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && lb.classList.contains('open')) close(); });
+    })();
   </script>
 </body>
 </html>
