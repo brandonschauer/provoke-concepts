@@ -1,0 +1,7 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- the slide-1 cascade: People + Teams, Tools + Approaches, Vision + Solutions -->
+  <rect width="32" height="32" rx="7" fill="#FDFCF7"/>
+  <rect x="3"  y="5"  width="18" height="6" rx="2" fill="#F4C21B"/>
+  <rect x="11" y="13" width="18" height="6" rx="2" fill="#8E2B22"/>
+  <rect x="7"  y="21" width="16" height="6" rx="2" fill="#E93B7A"/>
+</svg>
