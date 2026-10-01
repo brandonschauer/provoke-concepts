@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Warm Editorial — style guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="warm-editorial.css" />
+  <style>
+    /* style-guide-only helpers (not part of the system) */
+    .sg-title { border-bottom: 2px solid var(--border); padding-bottom: .4rem; margin-top: var(--space-8); }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-3); }
+    .swatch { border-radius: var(--r-sm); overflow: hidden; box-shadow: var(--shadow-sm); font-size: var(--fs-sm); }
+    .swatch .chip { height: 72px; }
+    .swatch .meta { background: var(--surface); padding: .5rem .6rem; }
+    .swatch code { color: var(--text-muted); }
+    .demo { border: 1px dashed var(--border); border-radius: var(--r-sm); padding: var(--space-5); }
+  </style>
+</head>
+<body>
+  <header class="band bg-gold">
+    <div class="container">
+      <p class="eyebrow" style="color: var(--c-maroon)">Design system</p>
+      <h1 class="display" style="color: var(--c-ink); margin: 0">Warm Editorial</h1>
+      <p class="lead" style="color: var(--c-maroon); max-width: 46ch">
+        A small, framework-free system of tokens and components for simple static sites —
+        <span class="accent-text" style="color: var(--c-maroon); font-weight: 700">friendly, warm, and readable</span>.
+      </p>
+    </div>
+  </header>
+
+  <main class="section container stack">
+
+    <!-- COLOR -->
+    <section data-reveal>
+      <h2 class="h3 sg-title">Color</h2>
+      <p class="muted">Raw palette below; components reference the semantic roles (<code>--accent</code>, <code>--text</code>, <code>--surface</code>…) so you can re-theme in one place.</p>
+      <div class="swatches">
+        <div class="swatch"><div class="chip bg-cream"></div><div class="meta">Cream<br><code>--c-cream</code></div></div>
+        <div class="swatch"><div class="chip bg-sand"></div><div class="meta">Sand<br><code>--c-sand</code></div></div>
+        <div class="swatch"><div class="chip bg-gold"></div><div class="meta">Gold · accent<br><code>--c-gold</code></div></div>
+        <div class="swatch"><div class="chip bg-maroon"></div><div class="meta">Maroon<br><code>--c-maroon</code></div></div>
+        <div class="swatch"><div class="chip bg-pink"></div><div class="meta">Pink<br><code>--c-pink</code></div></div>
+        <div class="swatch"><div class="chip bg-green"></div><div class="meta">Green<br><code>--c-green</code></div></div>
+        <div class="swatch"><div class="chip" style="height:72px;background:var(--c-peach)"></div><div class="meta">Peach<br><code>--c-peach</code></div></div>
+        <div class="swatch"><div class="chip" style="height:72px;background:var(--c-gray)"></div><div class="meta">Gray · muted text<br><code>--c-gray</code></div></div>
+        <div class="swatch"><div class="chip" style="height:72px;background:var(--c-ink)"></div><div class="meta">Ink · text<br><code>--c-ink</code></div></div>
+      </div>
+    </section>
+
+    <!-- TYPE -->
+    <section data-reveal>
+      <h2 class="h3 sg-title">Type scale</h2>
+      <div class="demo stack">
+        <p class="display mb-0">Display — <code>.display</code></p>
+        <p class="h2 mb-0">Heading 2 — <code>.h2</code></p>
+        <p class="h3 mb-0">Heading 3 — <code>.h3</code></p>
+        <p class="lead mb-0">Lead paragraph — <code>.lead</code>. Fluid, muted, for intros.</p>
+        <p class="mb-0">Body text — the default. An <a href="#">inline link</a> and an <span class="accent-text">accent highlight</span>.</p>
+        <p class="eyebrow mb-0">Eyebrow — .eyebrow</p>
+        <p class="muted mb-0" style="font-size:var(--fs-sm)">Small / caption — <code>--fs-sm</code></p>
+      </div>
+    </section>
+
+    <!-- PILLS -->
+    <section data-reveal>
+      <h2 class="h3 sg-title">Pills &amp; tags</h2>
+      <div class="demo cluster">
+        <span class="pill">Default pill</span>
+        <span class="pill pill--accent">Accent pill</span>
+        <span class="pill pill--check">With check</span>
+        <span class="pill">Service Design</span>
+        <span class="pill pill--accent">Taste</span>
+      </div>
+    </section>
+
+    <!-- BUTTONS -->
+    <section data-reveal>
+      <h2 class="h3 sg-title">Buttons</h2>
+      <div class="demo cluster" style="align-items:center">
+        <button class="btn">Primary</button>
+        <button class="btn btn--maroon">Maroon</button>
+        <button class="btn btn--ghost">Ghost</button>
+        <button class="btn btn--round" aria-label="Close">×</button>
+      </div>
+    </section>
+
+    <!-- CARDS + BLOCKS -->
+    <section data-reveal>
+      <h2 class="h3 sg-title">Cards &amp; color blocks</h2>
+      <div class="grid" style="--cols:3; --cols-sm:1; margin-bottom: var(--space-5)">
+        <div class="card"><h3 class="h3" style="font-size:1.1rem;margin:0 0 .3rem">Surface card</h3><p class="muted mb-0" style="font-size:var(--fs-sm)">Elevated content container — <code>.card</code>.</p></div>
+        <div class="card card--flat"><h3 class="h3" style="font-size:1.1rem;margin:0 0 .3rem">Flat card</h3><p class="muted mb-0" style="font-size:var(--fs-sm)">Bordered, no shadow — <code>.card--flat</code>.</p></div>
+        <div class="card"><h3 class="h3" style="font-size:1.1rem;margin:0 0 .3rem">Reuse anywhere</h3><p class="muted mb-0" style="font-size:var(--fs-sm)">Padding, radius and shadow from tokens.</p></div>
+      </div>
+      <div class="grid" style="--cols:4; --cols-sm:2">
+        <div class="block block--square is-green">Great Human Experiences</div>
+        <div class="block block--square is-gray">Cultures for Ambitious Futures</div>
+        <div class="block block--square is-maroon">Bridges to Ethical Capitalism</div>
+        <div class="block block--square is-pink">Products &amp; Futures Teams Love</div>
+      </div>
+    </section>
+
+    <!-- BARS -->
+    <section data-reveal>
+      <h2 class="h3 sg-title">Staggered bars</h2>
+      <div class="demo">
+        <div class="bars">
+          <span class="bar">People + Teams</span>
+          <span class="bar btn--maroon" style="background:var(--c-maroon);color:var(--c-sand)">Tools + Approaches</span>
+          <span class="bar" style="background:var(--c-pink);color:var(--c-cream)">Vision + Solutions</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEDIA / LIGHTBOX -->
+    <section data-reveal>
+      <h2 class="h3 sg-title">Media &amp; zoom</h2>
+      <p class="muted">Add <code>data-zoom</code> to any image; the JS wires up a shared lightbox (90% width, scrolls, fixed close button). Click the image below.</p>
+      <div class="demo" style="max-width:420px">
+        <img class="media" data-zoom alt="Sample slide"
+          src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%238E2B22'/%3E%3Ctext x='32' y='150' fill='%23FDFCF7' font-family='Poppins,sans-serif' font-size='30' font-weight='800'%3Eclick to zoom%3C/text%3E%3Ctext x='32' y='190' fill='%23F4C21B' font-family='Poppins,sans-serif' font-size='18'%3Edata-zoom + .media%3C/text%3E%3C/svg%3E" />
+      </div>
+    </section>
+
+    <!-- TABLE -->
+    <section data-reveal>
+      <h2 class="h3 sg-title">Responsive table</h2>
+      <p class="muted">On narrow screens the table scrolls sideways (via <code>.table-scroll</code>) rather than collapsing. Shrink the window to try it.</p>
+      <div class="demo">
+        <div class="table-scroll">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Frame</th>
+                <td>People + Teams</td>
+                <td>Tools + Approaches</td>
+                <td>Vision + Solutions</td>
+              </tr>
+              <tr>
+                <th scope="row">Category</th>
+                <td>Change management, Design Ops, Culture Transformation</td>
+                <td>AI solutions integration</td>
+                <td>Design Strategy, Product Strategy</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- LAYOUT -->
+    <section data-reveal>
+      <h2 class="h3 sg-title">Layout primitives</h2>
+      <ul class="muted flow-tight" style="padding-left:1.1rem">
+        <li><code>.section</code> — full-bleed block with fluid vertical + inline padding.</li>
+        <li><code>.band</code> — shorter colored header strip (pair with a <code>.bg-*</code> tint).</li>
+        <li><code>.container</code> — centers content at <code>--container</code> (940px).</li>
+        <li><code>.stack</code> — vertical rhythm between children; <code>.cluster</code> — wrapping row.</li>
+        <li><code>.grid</code> — equal columns via <code>--cols</code> / <code>--cols-sm</code>.</li>
+        <li><code>[data-reveal]</code> — fades/slides in on scroll (each section here uses it).</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="band bg-maroon">
+    <div class="container">
+      <p class="mb-0" style="color:var(--c-sand)">Warm Editorial · drop <code style="color:var(--c-gold)">warm-editorial.css</code> + <code style="color:var(--c-gold)">warm-editorial.js</code> into any static site.</p>
+    </div>
+  </footer>
+
+  <script src="warm-editorial.js" defer></script>
+</body>
+</html>

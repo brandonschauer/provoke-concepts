@@ -1,0 +1,239 @@
+/* ============================================================
+   WARM EDITORIAL — a small design system for simple static sites
+   Distilled from the Provoke concepts site.
+
+   Usage:
+     <link rel="stylesheet" href="warm-editorial.css">
+     <script src="warm-editorial.js" defer></script>   (optional: reveal + zoom)
+
+   Re-theme by overriding the semantic tokens in section 1.
+   ============================================================ */
+
+/* ---------- 1. Design tokens -------------------------------- */
+:root {
+  /* Brand palette (the raw colors) */
+  --c-cream:  #FDFCF7;
+  --c-sand:   #E7E1D0;
+  --c-sand-2: #F4F3EE;
+  --c-gold:   #F4C21B;
+  --c-maroon: #8E2B22;
+  --c-pink:   #E93B7A;
+  --c-green:  #1C6B43;
+  --c-peach:  #EF8458;
+  --c-gray:   #5A5650;
+  --c-ink:    #181613;
+  --c-white:  #FFFFFF;
+
+  /* Semantic roles — swap these to re-skin without touching components */
+  --bg:            var(--c-cream);
+  --surface:       var(--c-white);
+  --surface-muted: var(--c-sand-2);
+  --text:          var(--c-ink);
+  --text-muted:    var(--c-gray);
+  --border:        var(--c-sand);
+  --accent:        var(--c-gold);   /* primary accent */
+  --accent-ink:    var(--c-ink);    /* readable text on --accent */
+  --link:          var(--c-maroon);
+
+  /* Typography */
+  --font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --lh-tight: 1.15;
+  --lh-base:  1.5;
+
+  /* Fluid type scale — clamp(min, preferred-vw, max) */
+  --fs-sm:      clamp(0.82rem, 1.7vw, 0.95rem);
+  --fs-base:    1rem;
+  --fs-lead:    clamp(1.00rem, 2.4vw, 1.25rem);
+  --fs-h3:      clamp(1.40rem, 3.4vw, 2.00rem);
+  --fs-h2:      clamp(2.00rem, 6.0vw, 3.40rem);
+  --fs-display: clamp(2.10rem, 5.4vw, 3.40rem);
+
+  /* Weights (Poppins ships 400–800) */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semi:   600;
+  --fw-bold:   700;
+  --fw-black:  800;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.50rem;
+  --space-3: 0.75rem;
+  --space-4: 1.00rem;
+  --space-5: 1.50rem;
+  --space-6: 2.00rem;
+  --space-7: 3.00rem;
+  --space-8: 4.00rem;
+  --pad: clamp(1.25rem, 5vw, 3.5rem);   /* fluid inline padding for full-bleed sections */
+
+  /* Radius */
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-pill: 999px;
+
+  /* Elevation */
+  --shadow-sm: 0 8px 22px -12px rgba(40, 25, 20, .45);
+  --shadow-md: 0 18px 40px -24px rgba(40, 25, 20, .50);
+  --shadow-lg: 0 26px 64px -30px rgba(40, 25, 20, .55);
+
+  /* Layout + motion */
+  --container: 940px;
+  --ease: cubic-bezier(.2, .6, .2, 1);
+  --dur:  .3s;
+}
+
+/* ---------- 2. Reset & base -------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;              /* fluid layouts should never scroll sideways */
+}
+img, svg, video { max-width: 100%; height: auto; display: block; }
+a { color: var(--link); text-underline-offset: 2px; }
+h1, h2, h3, h4 {
+  margin: 0 0 .6em; line-height: var(--lh-tight);
+  font-weight: var(--fw-black); letter-spacing: -.01em;
+}
+p { margin: 0 0 1em; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- 3. Layout -------------------------------------- */
+.section   { width: 100%; padding: clamp(3rem, 8vh, 6rem) var(--pad); }
+.band      { width: 100%; padding: clamp(2.2rem, 6vh, 4rem) var(--pad); }  /* shorter colored header strip */
+.container { max-width: var(--container); margin-inline: auto; }
+
+/* composition helpers */
+.stack > * + * { margin-top: var(--space-5); }        /* vertical rhythm */
+.cluster { display: flex; flex-wrap: wrap; gap: var(--space-3); }  /* wrapping row of items */
+.grid    { display: grid; gap: var(--space-4); grid-template-columns: repeat(var(--cols, 3), 1fr); }
+@media (max-width: 640px) { .grid { grid-template-columns: repeat(var(--cols-sm, 1), 1fr); } }
+
+/* section background tints (set readable text where needed) */
+.bg-cream  { background: var(--c-cream); }
+.bg-sand   { background: var(--c-sand); }
+.bg-gold   { background: var(--c-gold);  color: var(--c-ink); }
+.bg-maroon { background: var(--c-maroon); color: var(--c-sand); }
+.bg-green  { background: var(--c-green);  color: var(--c-cream); }
+.bg-pink   { background: var(--c-pink);   color: var(--c-cream); }
+
+/* ---------- 4. Typography helpers -------------------------- */
+.display { font-size: var(--fs-display); font-weight: var(--fw-bold); line-height: var(--lh-tight); letter-spacing: -.015em; }
+.h2      { font-size: var(--fs-h2); font-weight: var(--fw-black); line-height: var(--lh-tight); }
+.h3      { font-size: var(--fs-h3); font-weight: var(--fw-bold);  line-height: var(--lh-tight); }
+.lead    { font-size: var(--fs-lead); font-weight: var(--fw-semi); color: var(--text-muted); }
+.eyebrow { font-size: var(--fs-sm); font-weight: var(--fw-semi); letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 .6rem; }
+.muted   { color: var(--text-muted); }
+.accent-text { color: var(--accent); }         /* inline highlight, e.g. <span class="accent-text"> */
+
+/* ---------- 5. Components ---------------------------------- */
+
+/* 5.1 Pills / tags */
+.pill {
+  display: inline-block; padding: .45rem .9rem; border-radius: var(--r-pill);
+  font-size: var(--fs-sm); font-weight: var(--fw-medium);
+  background: var(--c-sand); color: var(--text);
+}
+.pill--accent { background: var(--accent); color: var(--accent-ink); font-weight: var(--fw-semi); }
+.pill--check  { display: inline-flex; align-items: center; gap: .5rem; background: var(--c-sand); color: var(--c-maroon); font-weight: var(--fw-semi); }
+.pill--check::before { content: '✓'; color: var(--c-green); font-weight: var(--fw-black); }
+
+/* 5.2 Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  padding: .7rem 1.3rem; border: 0; border-radius: var(--r-pill); cursor: pointer;
+  font: inherit; font-weight: var(--fw-semi); font-size: var(--fs-sm);
+  background: var(--accent); color: var(--accent-ink); text-decoration: none;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.btn:hover  { box-shadow: var(--shadow-sm); }
+.btn:active { transform: translateY(1px); }
+.btn--maroon { background: var(--c-maroon); color: var(--c-cream); }
+.btn--ghost  { background: transparent; color: var(--c-maroon); box-shadow: inset 0 0 0 2px var(--border); }
+.btn--round  { width: 48px; height: 48px; padding: 0; border-radius: 50%; font-size: 1.6rem; line-height: 1; }
+
+/* 5.3 Cards & color blocks */
+.card {
+  background: var(--surface); border-radius: var(--r-md);
+  padding: var(--space-5); box-shadow: var(--shadow-sm);
+}
+.card--flat { box-shadow: none; border: 2px solid var(--border); }
+
+/* solid color block; text sits bottom-left. add .block--square for a 1:1 tile */
+.block {
+  border-radius: var(--r-md); padding: 1.1rem; color: var(--c-cream);
+  font-weight: var(--fw-bold); line-height: 1.2; min-height: 8rem;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+}
+.block--square { aspect-ratio: 1 / 1; min-height: 0; }
+.block.is-green  { background: var(--c-green); }
+.block.is-gray   { background: var(--c-gray); }
+.block.is-maroon { background: var(--c-maroon); }
+.block.is-pink   { background: var(--c-pink); }
+.block.is-gold   { background: var(--c-gold); color: var(--c-ink); }
+
+/* 5.4 Bold rounded label bar (one, or a staggered .bars cascade) */
+.bar {
+  display: block; padding: 1rem 1.4rem; border-radius: var(--r-md);
+  font-weight: var(--fw-semi); text-align: center; font-size: var(--fs-lead);
+  background: var(--accent); color: var(--accent-ink);
+}
+.bars { display: flex; flex-direction: column; gap: .7rem; align-items: flex-start; }
+.bars .bar { width: min(100%, 62%); }               /* staggered, scales with container */
+.bars .bar:nth-child(2) { margin-left: 38%; }
+.bars .bar:nth-child(3) { margin-left: 19%; }
+@media (max-width: 640px) { .bars .bar { width: min(100%, 84%); } .bars .bar:nth-child(2){ margin-left: 16%; } .bars .bar:nth-child(3){ margin-left: 8%; } }
+
+/* 5.5 Media (image) with elevation + optional click-to-zoom */
+.media { border-radius: var(--r-lg); box-shadow: var(--shadow-lg); }
+.media--zoom { cursor: zoom-in; }                    /* also added automatically to [data-zoom] by the JS */
+.media--zoom:focus-visible { outline-offset: 4px; }  /* the JS makes [data-zoom] images focusable */
+
+/* 5.6 Lightbox — image at ~90% width, scrolls, fixed close button (see JS) */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000; display: none;
+  overflow-y: auto; overflow-x: hidden;
+  background: rgba(24, 22, 19, .85); -webkit-overflow-scrolling: touch;
+}
+.lightbox.is-open { display: block; }
+.lightbox__img {
+  display: block; width: 90%; height: auto; margin: 4vh auto;
+  border-radius: var(--r-md); box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .7);
+}
+.lightbox__close {
+  position: fixed; top: 18px; right: 22px; z-index: 1001;
+  width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(0, 0, 0, .55); color: #fff; font-size: 30px; line-height: 1;
+  display: grid; place-items: center; transition: background var(--dur) var(--ease);
+}
+.lightbox__close:hover { background: rgba(0, 0, 0, .85); }
+body.has-lightbox { overflow: hidden; }
+
+/* 5.7 Responsive table — scrolls sideways on narrow screens instead of collapsing */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 40rem; }
+.table th, .table td { text-align: left; padding: 1rem .9rem; vertical-align: top; border-top: 2px solid var(--border); }
+.table th[scope="row"] { font-weight: var(--fw-bold); color: var(--text); white-space: nowrap; width: 8rem; }
+.table td { color: var(--text-muted); }
+
+/* ---------- 6. Reveal on scroll (progressive enhancement) --- */
+/* Content is fully visible without JS; the JS adds .js to <html> and .is-in per element,
+   so a failed/absent script can never leave content stuck hidden. */
+.js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .js [data-reveal] { opacity: 1; transform: none; transition: none; } }
+
+/* ---------- 7. A few utilities ----------------------------- */
+.text-center { text-align: center; }
+.text-left   { text-align: left; }
+.flow-tight > * + * { margin-top: var(--space-3); }
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.full { width: 100%; }
